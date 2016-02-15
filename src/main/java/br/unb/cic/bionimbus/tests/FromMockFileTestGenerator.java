@@ -5,8 +5,6 @@
  */
 package br.unb.cic.bionimbus.tests;
 
-import static com.sun.corba.se.impl.util.Utility.printStackTrace;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Arrays;
@@ -113,7 +111,7 @@ public class FromMockFileTestGenerator extends FromLogFileTestGenerator {
                 }
             } catch (Exception e) {
                 e.getMessage();
-                printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
             // push taskList to the pipelineTemplates
             Workflow p = new Workflow(Arrays.asList(taskList));
@@ -153,7 +151,7 @@ public class FromMockFileTestGenerator extends FromLogFileTestGenerator {
             }
         } catch (Exception e) {
             System.out.println(e.toString());
-            printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 }

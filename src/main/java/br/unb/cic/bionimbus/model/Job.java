@@ -4,13 +4,14 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
@@ -22,41 +23,31 @@ public class Job implements Serializable {
 
     @Id
     private String id;
-
-    public long testId;
-
+    private long testId;
     private String localId;
-
     private String serviceId;
-
     private String args = "";
-
-//    @Transient
+    // @Transient
     // inputs = [{input.id, input.size}]
-//    private List<Pair<String, Long>> inputs;
+    // private List<Pair<String, Long>> inputs;
     @Transient
     private List<FileInfo> inputFiles;
-
     @Transient
     private String inputURL;
-
     @Transient
     private List<String> outputs;
-
     private long timestamp;
-
     private Double worstExecution = null;
-
     @Transient
     private final List<String> dependencies;
+    private String referenceFile;
 
     public Job() {
-//        inputs = new ArrayList<>();
+        // inputs = new ArrayList<>();
         inputFiles = new ArrayList<>();
         outputs = new ArrayList<>();
         dependencies = new ArrayList<>();
     }
-
     /**
      * Receives only the String ID
      *
@@ -64,12 +55,11 @@ public class Job implements Serializable {
      */
     public Job(String id) {
         this.id = id;
-//        inputs = new ArrayList<>();
+        // inputs = new ArrayList<>();
         inputFiles = new ArrayList<>();
         outputs = new ArrayList<>();
         dependencies = new ArrayList<>();
     }
-
     /**
      * This constructor is for testing purposes only
      *
@@ -77,44 +67,35 @@ public class Job implements Serializable {
      */
     public Job(double worstExecution) {
         this.worstExecution = worstExecution;
-//        inputs = new ArrayList<>();
+        // inputs = new ArrayList<>();
         inputFiles = new ArrayList<>();
         outputs = new ArrayList<>();
         dependencies = new ArrayList<>();
     }
-
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
-
     public String getLocalId() {
         return this.localId;
     }
-
     public void setLocalId(String id) {
         this.localId = id;
     }
-
     public String getServiceId() {
         return serviceId;
     }
-
     public void setServiceId(String serviceId) {
         this.serviceId = serviceId;
     }
-
     public String getArgs() {
         return args;
     }
-
     public void setArgs(String args) {
         this.args = args;
     }
-
     /**
      * Web application verifies if it is duplicated, so do not need to iterate
      * over the input files.
@@ -124,31 +105,24 @@ public class Job implements Serializable {
     public void addInput(FileInfo fileInfo) {
         inputFiles.add(fileInfo);
     }
-
     public List<FileInfo> getInputFiles() {
         return inputFiles;
     }
-
     public void setInputFiles(List<FileInfo> inputFiles) {
         this.inputFiles = inputFiles;
     }
-
     public List<String> getOutputs() {
         return outputs;
     }
-
     public void addOutput(String name) {
         outputs.add(name);
     }
-
     public long getTimestamp() {
         return timestamp;
     }
-
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
-
     /**
      * To be used only by avro
      *
@@ -157,31 +131,39 @@ public class Job implements Serializable {
     public void setWorstExecution(double worstExecution) {
         this.worstExecution = worstExecution;
     }
-
     public Double getWorstExecution() {
         return worstExecution;
     }
-
     /**
      * Add a dependency to be executed beforehand
-     * @param id The unique id of a job
+     *
+     * @param id
+     *            The unique id of a job
      */
     public void addDependency(String id) {
         dependencies.add(id);
     }
-
     public List<String> getDependencies() {
         return dependencies;
     }
-
     public String getInputURL() {
         return inputURL;
     }
-
     public void setInputURL(String inputURL) {
         this.inputURL = inputURL;
     }
-
+    public String getReferenceFile() {
+        return referenceFile;
+    }
+    public void setReferenceFile(String referenceFile) {
+        this.referenceFile = referenceFile;
+    }
+    public long getTestId() {
+        return this.testId;
+    }
+    public void setTestId(long testId) {
+        this.testId = testId;
+    }
     @Override
     public String toString() {
         try {
@@ -189,8 +171,6 @@ public class Job implements Serializable {
         } catch (IOException ex) {
             Logger.getLogger(Job.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return null;
     }
-
 }

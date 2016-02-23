@@ -24,6 +24,7 @@ import java.io.IOException;
 import br.unb.cic.bionimbus.services.storage.bandwidth.BandwidthCalculator;
 import br.unb.cic.bionimbus.services.storage.compress.CompressPolicy;
 
+import br.unb.cic.bionimbus.config.ConfigurationRepository;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
@@ -69,7 +70,7 @@ public class Put {
 	 * @throws SftpException
 	 */
 	public boolean startSession() throws JSchException, SftpException {
-		String pathDest = "/home/zoonimbus/zoonimbusProject/data-folder/";
+		String pathDest = ConfigurationRepository.getDataFolder();
 		try {
 
 			session = jsch.getSession(USER, address, PORT);
@@ -106,7 +107,6 @@ public class Put {
 			sftpChannel.exit();
 			session.disconnect();
 			fim = System.currentTimeMillis();
-
 			CompressPolicy.deleteIfCompressed(toBeSent);
 
 		} catch (JSchException a) {

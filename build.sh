@@ -10,13 +10,21 @@ SSH_PORT=22
 
 usage()
 {
-  echo "$0 SSH_USER SSH_PASSWORD [SSH_PORT=22]"
-  echo "$0 ubuntu 123456 22"
+  echo "USAGE:"
+  echo "    $0 SSH_USER SSH_PASSWORD [SSH_PORT=22]"
+  echo "    $0 ubuntu 123456 22"
+  exit
 }
 
-if [[ "$1" -eq "" ]]; then usage() ; exit; fi
-if [[ "$2" -eq "" ]]; then usage() ; exit; fi
-if [[ "$3" -neq "" ]]; then SSH_PORT=$3; fi
+if [[ "$1" -eq "" ]]; then
+  usage
+fi
+if [[ "$2" -eq "" ]]; then
+  usage
+fi
+if [[ "$3" -neq "" ]]; then
+  SSH_PORT=$3
+fi
 
 SSH_USER=$1
 SSH_PASS=$2
